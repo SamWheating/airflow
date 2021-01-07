@@ -27,7 +27,7 @@ if any(suffix in version.version for suffix in ['dev', 'a', 'b']):
         "/stable-rest-api-ref.html"
     )
 else:
-    doc_link = f'https://airflow.apache.org/docs/{version.version}/stable-rest-api-ref.html'
+    doc_link = f'https://airflow.apache.org/docs/apache-airflow/{version.version}/stable-rest-api-ref.html'
 
 EXCEPTIONS_LINK_MAP = {
     400: f"{doc_link}#section/Errors/BadRequest",
