@@ -44,7 +44,7 @@ class ConnectionSchema(ConnectionCollectionItemSchema):
     """Connection schema"""
 
     password = auto_field(load_only=True)
-    extra = auto_field()
+    extra = auto_field(load_only=True)
 
 
 class ConnectionCollection(NamedTuple):

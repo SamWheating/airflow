@@ -178,7 +178,6 @@ class TestConnectionSchema(unittest.TestCase):
             'login': 'login',
             'schema': 'testschema',
             'port': 80,
-            'extra': "{'key':'string'}",
         }
 
     def test_deserialize(self):

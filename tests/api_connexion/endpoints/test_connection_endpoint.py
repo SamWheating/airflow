@@ -133,7 +133,6 @@ class TestGetConnection(TestConnectionEndpoint):
             "login": 'login',
             'schema': 'testschema',
             'port': 80,
-            'extra': "{'param': 'value'}",
         }
 
     def test_should_respond_404(self):
@@ -372,7 +371,6 @@ class TestPatchConnection(TestConnectionEndpoint):
             "connection_id": test_connection,  # not updated
             "conn_type": 'test_type',  # Not updated
             "description": None,  # Not updated
-            "extra": None,  # Not updated
             'login': "login",  # updated
             "port": 80,  # updated
             "schema": None,
