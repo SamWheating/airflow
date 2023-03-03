@@ -178,7 +178,7 @@ def create_timetable(interval: ScheduleIntervalArg, timezone: Timezone) -> Timet
         return DeltaDataIntervalTimetable(DEFAULT_SCHEDULE_INTERVAL)
     if interval is None:
         return NullTimetable()
-    if interval == "@once":
+    if interval in ("@once", "@continuous"):
         return OnceTimetable()
     if isinstance(interval, (timedelta, relativedelta)):
         return DeltaDataIntervalTimetable(interval)
@@ -2771,7 +2771,11 @@ class DAG(LoggingMixin):
                 data_interval = None
             else:
                 data_interval = dag.get_run_data_interval(run)
-            if num_active_runs.get(dag.dag_id, 0) >= orm_dag.max_active_runs:
+            # For continuous DAGs, continue creating until max_active_dags is reached
+            if dag.schedule_interval == "@continuous":
+                if num_active_runs.get(dag.dag_id, 0) < dag.max_active_runs:
+                    orm_dag.next_dagrun_create_after = orm_dag.next_dagrun = timezone.utcnow()
+            elif num_active_runs.get(dag.dag_id, 0) >= orm_dag.max_active_runs:
                 orm_dag.next_dagrun_create_after = None
             else:
                 orm_dag.calculate_dagrun_date_fields(dag, data_interval)
@@ -3429,6 +3433,8 @@ class DagModel(Base):
         :param most_recent_dag_run: DataInterval (or datetime) of most recent run of this dag, or none
             if not yet scheduled.
         """
+        if dag.schedule_interval == "@continuous":
+            return
         most_recent_data_interval: DataInterval | None
         if isinstance(most_recent_dag_run, datetime):
             warnings.warn(
