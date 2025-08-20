@@ -9521,6 +9521,11 @@ components:
             format: date-time
           - type: 'null'
           title: Last Parsed Time
+        last_parse_duration:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Last Parse Duration
         last_expired:
           anyOf:
           - type: string
@@ -9715,6 +9720,7 @@ components:
       - is_paused
       - is_stale
       - last_parsed_time
+      - last_parse_duration
       - last_expired
       - bundle_name
       - bundle_version
@@ -9783,6 +9789,11 @@ components:
             format: date-time
           - type: 'null'
           title: Last Parsed Time
+        last_parse_duration:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Last Parse Duration
         last_expired:
           anyOf:
           - type: string
@@ -9885,6 +9896,7 @@ components:
       - is_paused
       - is_stale
       - last_parsed_time
+      - last_parse_duration
       - last_expired
       - bundle_name
       - bundle_version
